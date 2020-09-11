@@ -17,10 +17,10 @@ private:
     Texture button;
     Text win;
     Text play;
-    Text stop;
+    Text quit;
     Font font;
     Sprite playSprite;
-    Sprite stopSprite;
+    Sprite quitSprite;
     char turn = 'X';
     bool active = false;
 public:
@@ -29,9 +29,9 @@ public:
         playSprite.setTexture(button);
         playSprite.setOrigin(Vector2f(playSprite.getLocalBounds().width / 2, playSprite.getLocalBounds().height / 2));
         playSprite.setPosition(166, 780);
-        stopSprite.setTexture(button);
-        stopSprite.setOrigin(Vector2f(stopSprite.getLocalBounds().width / 2, stopSprite.getLocalBounds().height / 2));
-        stopSprite.setPosition(466, 780);
+        quitSprite.setTexture(button);
+        quitSprite.setOrigin(Vector2f(quitSprite.getLocalBounds().width / 2, quitSprite.getLocalBounds().height / 2));
+        quitSprite.setPosition(466, 780);
         font.loadFromFile("Fonts/myriad.OTF");
         win.setFont(font);
         win.setCharacterSize(55);
@@ -40,14 +40,14 @@ public:
         play.setCharacterSize(40);
         play.setFillColor(Color::Black);
         play.setString("Play");
-        play.setOrigin(Vector2f(win.getLocalBounds().width / 2, win.getLocalBounds().height / 2));
-        play.setPosition(140, 750);
-        stop.setFont(font);
-        stop.setCharacterSize(40);
-        stop.setFillColor(Color::Black);
-        stop.setString("Stop");
-        stop.setOrigin(Vector2f(win.getLocalBounds().width / 2, win.getLocalBounds().height / 2));
-        stop.setPosition(435, 750);
+        play.setOrigin(Vector2f(play.getLocalBounds().width / 2, play.getLocalBounds().height / 2));
+        play.setPosition(165, 770);
+        quit.setFont(font);
+        quit.setCharacterSize(40);
+        quit.setFillColor(Color::Black);
+        quit.setString("Quit");
+        quit.setOrigin(Vector2f(quit.getLocalBounds().width / 2, quit.getLocalBounds().height / 2));
+        quit.setPosition(465, 768);
         nothing.loadFromFile("Textures/Nothing.png");
         X.loadFromFile("Textures/X.png");
         O.loadFromFile("Textures/O.png");
@@ -55,6 +55,7 @@ public:
         gameGrid.setTexture(gridTex);
         gameGrid.setOrigin(Vector2f(gameGrid.getLocalBounds().width / 2, gameGrid.getLocalBounds().height / 2));
         gameGrid.setPosition(315, 415);
+        TicTacToeText();
 
         for (int i = 0; i < 9; i++) {
             grid[i].setOrigin(grid[i].getLocalBounds().width / 2, grid[i].getLocalBounds().height / 2);
@@ -79,6 +80,12 @@ public:
         else {
             return false;
         }
+    }
+
+    void TicTacToeText() {
+        win.setString("Tic Tac Toe");
+        win.setPosition(315, 35);
+        win.setOrigin(Vector2f(win.getLocalBounds().width / 2, win.getLocalBounds().height / 2));
     }
 
     void SetCellTexture(Sprite& sprite, char& turn) { //Sets the texture for the chosen sprite
@@ -226,12 +233,15 @@ public:
                     break;
                 case Event::MouseButtonPressed:
                     if (CheckClick(playSprite, window)) {
+                        TicTacToeText();
                         ClearGrid();
                         active = true;
                     }
-                    else if (CheckClick(stopSprite, window)) {
+                    else if (CheckClick(quitSprite, window)) {
+                        TicTacToeText();
                         ClearGrid();
                         active = false;
+                        exit(0);
                     }
                     if (active) {
                         if (event.mouseButton.button == Mouse::Left) {
@@ -248,9 +258,9 @@ public:
             window.draw(gameGrid);
             window.draw(win); 
             window.draw(playSprite);
-            window.draw(stopSprite);
+            window.draw(quitSprite);
             window.draw(play);
-            window.draw(stop);
+            window.draw(quit);
             window.display();
         }
     }
