@@ -252,7 +252,7 @@ public:
                 }
             }
 
-            window.clear(Color::Cyan); //Displays everything
+            window.clear(Color(240, 212, 58)); //Displays everything
             for (int i = 0; i < 9; i++)
                 window.draw(grid[i]);
             window.draw(gameGrid);
