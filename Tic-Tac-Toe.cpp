@@ -125,12 +125,9 @@ public:
     void CheckWin(char player) { //Checks if someone won
         Texture* t;
         if (player == 'X')
-        {
             t = &X;
-        }
-        else {
+        else 
             t = &O;
-        }
 
         if ((grid[0].getTexture() == t) && (grid[1].getTexture() == t) && (grid[2].getTexture() == t)) {
             active = false;
