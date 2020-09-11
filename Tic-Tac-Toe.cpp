@@ -202,7 +202,7 @@ public:
             else
                 OWin();
         }
-        else if (moves == 9) { 
+        else if ((moves == 9) && (active == true)) { 
             tieSound.play();
             win.setString("Tie. No one won");
             win.setPosition(315, 35);
