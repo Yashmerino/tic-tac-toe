@@ -23,6 +23,7 @@ private:
     Sprite quitSprite;
     char turn = 'X';
     bool active = false;
+    int moves = 0;
 public:
     TicTacToe() { //Constructor
         button.loadFromFile("Textures/button.png");
@@ -55,7 +56,7 @@ public:
         gameGrid.setTexture(gridTex);
         gameGrid.setOrigin(Vector2f(gameGrid.getLocalBounds().width / 2, gameGrid.getLocalBounds().height / 2));
         gameGrid.setPosition(315, 415);
-        TicTacToeText();
+        GameMainText();
 
         for (int i = 0; i < 9; i++) {
             grid[i].setOrigin(grid[i].getLocalBounds().width / 2, grid[i].getLocalBounds().height / 2);
@@ -82,7 +83,7 @@ public:
         }
     }
 
-    void TicTacToeText() {
+    void GameMainText() {
         win.setString("Tic Tac Toe");
         win.setPosition(315, 35);
         win.setOrigin(Vector2f(win.getLocalBounds().width / 2, win.getLocalBounds().height / 2));
@@ -91,10 +92,12 @@ public:
     void SetCellTexture(Sprite& sprite, char& turn) { //Sets the texture for the chosen sprite
         if (sprite.getTexture() == &nothing) {
             if (turn == 'X') {
+                moves++;
                 turn = 'O';
                 sprite.setTexture(X);
             }
             else {
+                moves++;
                 turn = 'X';
                 sprite.setTexture(O);
             }
@@ -122,9 +125,12 @@ public:
     void CheckWin(char player) { //Checks if someone won
         Texture* t;
         if (player == 'X')
+        {
             t = &X;
-        else
+        }
+        else {
             t = &O;
+        }
 
         if ((grid[0].getTexture() == t) && (grid[1].getTexture() == t) && (grid[2].getTexture() == t)) {
             active = false;
@@ -133,54 +139,59 @@ public:
             else
                 OWin();
         }
-        if ((grid[3].getTexture() == t) && (grid[4].getTexture() == t) && (grid[5].getTexture() == t)) {
+        else if ((grid[3].getTexture() == t) && (grid[4].getTexture() == t) && (grid[5].getTexture() == t)) {
             active = false;
             if (player == 'X')
                 XWin();
             else
                 OWin();
         }
-        if ((grid[6].getTexture() == t) && (grid[7].getTexture() == t) && (grid[8].getTexture() == t)) {
+        else if ((grid[6].getTexture() == t) && (grid[7].getTexture() == t) && (grid[8].getTexture() == t)) {
             active = false;
             if (player == 'X')
                 XWin();
             else
                 OWin();
         }
-        if ((grid[0].getTexture() == t) && (grid[3].getTexture() == t) && (grid[6].getTexture() == t)) {
+        else if ((grid[0].getTexture() == t) && (grid[3].getTexture() == t) && (grid[6].getTexture() == t)) {
             active = false;
             if (player == 'X')
                 XWin();
             else
                 OWin();
         }
-        if ((grid[1].getTexture() == t) && (grid[4].getTexture() == t) && (grid[7].getTexture() == t)) {
+        else if ((grid[1].getTexture() == t) && (grid[4].getTexture() == t) && (grid[7].getTexture() == t)) {
             active = false;
             if (player == 'X')
                 XWin();
             else
                 OWin();
         }
-        if ((grid[2].getTexture() == t) && (grid[5].getTexture() == t) && (grid[8].getTexture() == t)) {
+        else if ((grid[2].getTexture() == t) && (grid[5].getTexture() == t) && (grid[8].getTexture() == t)) {
             active = false;
             if (player == 'X')
                 XWin();
             else
                 OWin();
         }
-        if ((grid[0].getTexture() == t) && (grid[4].getTexture() == t) && (grid[8].getTexture() == t)) {
+        else if ((grid[0].getTexture() == t) && (grid[4].getTexture() == t) && (grid[8].getTexture() == t)) {
             active = false;
             if (player == 'X')
                 XWin();
             else
                 OWin();
         }
-        if ((grid[2].getTexture() == t) && (grid[4].getTexture() == t) && (grid[6].getTexture() == t)) {
+        else if ((grid[2].getTexture() == t) && (grid[4].getTexture() == t) && (grid[6].getTexture() == t)) {
             active = false;
             if (player == 'X')
                 XWin();
             else
                 OWin();
+        }
+        else if (moves == 9) { 
+            win.setString("Tie. No one won");
+            win.setPosition(315, 35);
+            win.setOrigin(Vector2f(win.getLocalBounds().width / 2, win.getLocalBounds().height / 2));
         }
     }
 
@@ -233,12 +244,13 @@ public:
                     break;
                 case Event::MouseButtonPressed:
                     if (CheckClick(playSprite, window)) {
-                        TicTacToeText();
+                        GameMainText();
                         ClearGrid();
+                        moves = 0;
                         active = true;
                     }
                     else if (CheckClick(quitSprite, window)) {
-                        TicTacToeText();
+                        GameMainText();
                         ClearGrid();
                         active = false;
                         exit(0);
