@@ -1,4 +1,5 @@
 #include "SFML/Graphics.hpp"
+#include "SFML/Audio.hpp"
 #include <iostream>
 
 using namespace std;
@@ -21,11 +22,19 @@ private:
     Font font;
     Sprite playSprite;
     Sprite quitSprite;
+    SoundBuffer winBuffer;
+    SoundBuffer tieBuffer;
+    Sound winSound;
+    Sound tieSound;
     char turn = 'X';
     bool active = false;
     int moves = 0;
 public:
     TicTacToe() { //Constructor
+        winBuffer.loadFromFile("Sounds/win.ogg");
+        tieBuffer.loadFromFile("Sounds/tie.ogg");
+        winSound.setBuffer(winBuffer);
+        tieSound.setBuffer(tieBuffer);
         button.loadFromFile("Textures/button.png");
         playSprite.setTexture(button);
         playSprite.setOrigin(Vector2f(playSprite.getLocalBounds().width / 2, playSprite.getLocalBounds().height / 2));
@@ -84,7 +93,7 @@ public:
     }
 
     void GameMainText() {
-        win.setString("Tic Tac Toe");
+        win.setString("Tic-Tac-Toe");
         win.setPosition(315, 35);
         win.setOrigin(Vector2f(win.getLocalBounds().width / 2, win.getLocalBounds().height / 2));
     }
@@ -130,6 +139,7 @@ public:
             t = &O;
 
         if ((grid[0].getTexture() == t) && (grid[1].getTexture() == t) && (grid[2].getTexture() == t)) {
+            winSound.play();
             active = false;
             if (player == 'X')
                 XWin();
@@ -137,6 +147,7 @@ public:
                 OWin();
         }
         else if ((grid[3].getTexture() == t) && (grid[4].getTexture() == t) && (grid[5].getTexture() == t)) {
+            winSound.play();
             active = false;
             if (player == 'X')
                 XWin();
@@ -144,6 +155,7 @@ public:
                 OWin();
         }
         else if ((grid[6].getTexture() == t) && (grid[7].getTexture() == t) && (grid[8].getTexture() == t)) {
+            winSound.play();
             active = false;
             if (player == 'X')
                 XWin();
@@ -151,6 +163,7 @@ public:
                 OWin();
         }
         else if ((grid[0].getTexture() == t) && (grid[3].getTexture() == t) && (grid[6].getTexture() == t)) {
+            winSound.play();
             active = false;
             if (player == 'X')
                 XWin();
@@ -158,6 +171,7 @@ public:
                 OWin();
         }
         else if ((grid[1].getTexture() == t) && (grid[4].getTexture() == t) && (grid[7].getTexture() == t)) {
+            winSound.play();
             active = false;
             if (player == 'X')
                 XWin();
@@ -165,6 +179,7 @@ public:
                 OWin();
         }
         else if ((grid[2].getTexture() == t) && (grid[5].getTexture() == t) && (grid[8].getTexture() == t)) {
+            winSound.play();
             active = false;
             if (player == 'X')
                 XWin();
@@ -172,6 +187,7 @@ public:
                 OWin();
         }
         else if ((grid[0].getTexture() == t) && (grid[4].getTexture() == t) && (grid[8].getTexture() == t)) {
+            winSound.play();
             active = false;
             if (player == 'X')
                 XWin();
@@ -179,6 +195,7 @@ public:
                 OWin();
         }
         else if ((grid[2].getTexture() == t) && (grid[4].getTexture() == t) && (grid[6].getTexture() == t)) {
+            winSound.play();
             active = false;
             if (player == 'X')
                 XWin();
@@ -186,6 +203,7 @@ public:
                 OWin();
         }
         else if (moves == 9) { 
+            tieSound.play();
             win.setString("Tie. No one won");
             win.setPosition(315, 35);
             win.setOrigin(Vector2f(win.getLocalBounds().width / 2, win.getLocalBounds().height / 2));
