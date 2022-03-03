@@ -1,5 +1,5 @@
 <h1 align="center"><strong><em>Tic-Tac-Toe</strong></em></h1>
-<p align="center"><img src="https://image.flaticon.com/icons/png/512/566/566294.png" alt="Tic-Tac-Toe logo" height=300 width=300></p>
+<p align="center"><img src="https://cdn-icons-png.flaticon.com/512/1865/1865460.png" alt="Tic-Tac-Toe logo" height=300 width=300></p>
   
 # How to run the app?
 
